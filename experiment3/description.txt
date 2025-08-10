@@ -1,0 +1,115 @@
+1. SECTION: Theme Toggle
+Requirement: Should switch between Light and Dark mode on checkbox toggle.
+Implementation:
+
+Uses a <input type="checkbox"> to toggle .dark class on <body> using onchange event.
+
+Dark mode styles are defined under body.dark using CSS custom properties (--bg-color, --text-color, etc.).
+
+ VALID BEHAVIOR:
+
+Checkbox checked: Dark mode applied (dark background, white text).
+
+Checkbox unchecked: Light mode applied (white background, dark text).
+
+INVALID BEHAVIOR:
+
+Page should not break if JS is disabled (note: it currently uses inline JS).
+
+Without JS, theme toggle won’t work.
+
+2. SECTION: Navigation Menu
+Requirement: Should provide clear links for navigation (not functional yet, but UI-ready).
+Links:
+
+Home
+
+Users
+
+Settings
+
+VALID BEHAVIOR:
+
+All links styled with underline and inherit text color from theme.
+
+On smaller screens, layout adjusts responsively to a single column.
+
+ INVALID BEHAVIOR:
+
+If CSS is broken, navigation may not visually separate.
+
+3. SECTION: Main Content
+Requirement: Centered welcome message and placeholder content.
+
+VALID CONTENT:
+
+Title: “Welcome, Admin!”
+
+Description: “This is the main content area. Add charts, tables, or reports here.”
+
+4. FORM SUBMISSION:
+ Not applicable in this dashboard version (no form submission used).
+This dashboard is primarily UI-focused; however, behavior validation is expected in extended versions that may include forms or actions.
+
+CSS Styling Breakdown: A Structured Overview
+1. ELEMENT: body (Global Layout & Theming)
+background-color: var(--bg-color); → Applies either white (light mode) or dark (dark mode) background.
+
+display: grid; grid-template-rows: auto 1fr auto; → Layout splits into header, main, and footer sections.
+
+height: 100vh; → Full viewport height for a fixed layout.
+
+2. ELEMENT: header (Top Navigation Bar)
+background-color: var(--header-bg); → Green in light mode, dark in dark mode.
+
+display: flex; justify-content: space-between; → Aligns dashboard title and theme switch on opposite ends.
+
+padding: 1rem; → Consistent spacing.
+
+3. ELEMENT: .theme-switch (Theme Toggle UI)
+display: flex; align-items: center; → Aligns label and checkbox.
+
+transform: scale(1.2); → Enlarges checkbox for visibility.
+
+4. ELEMENT: main (Grid for Sidebar and Content)
+grid-template-columns: 200px 1fr; → Sidebar on the left (fixed 200px), main content takes rest.
+
+5. ELEMENT: nav (Sidebar)
+background-color: var(--sidebar-bg); → Light gray or dark tone depending on mode.
+
+padding: 1rem; → Inner spacing for list readability.
+
+border-right: 1px solid #ccc; → Subtle division from content area.
+
+6. ELEMENT: nav ul li a (Links)
+text-decoration: underline; → Ensures visibility.
+
+color: var(--text-color); → Adapts with theme.
+
+7. ELEMENT: section (Main Area)
+padding: 2rem; → Spacious layout for content readability.
+
+8. ELEMENT: footer
+background-color: var(--footer-bg); → Matches header.
+
+text-align: center; → Content centered horizontally.
+
+padding: 0.75rem; font-size: 0.9rem; → Compact and readable.
+
+9. MEDIA QUERY
+@media (max-width: 768px):
+
+Switches main to a single column layout.
+
+Sidebar becomes top section.
+
+LEARNING OUTCOMES:
+How to build a responsive admin dashboard layout using HTML & CSS Grid.
+
+How to apply dynamic theming (light/dark mode) using CSS variables and toggle behavior.
+
+How to structure navigation, content area, and footer for consistent UI.
+
+How to create scalable, responsive UI components without external libraries.
+
+Understanding limitations of CSS-only and enhancing interactivity with minimal JavaScript.
