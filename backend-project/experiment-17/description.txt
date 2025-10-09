@@ -1,0 +1,21 @@
+This experiment focused on securing sensitive API endpoints using JSON Web Tokens (JWT) in an Express.js banking application. JWTs are widely used for stateless authentication in modern web applications.
+
+We implemented a simple banking API with the following features:
+
+/login – Accepts hardcoded username and password and returns a signed JWT token on successful authentication.
+
+Protected Routes (/balance, /deposit, /withdraw) – Require a valid JWT token in the Authorization header. Access without a valid token is denied.
+
+Error Handling – Manages invalid tokens, missing tokens, and insufficient balance for withdrawals.
+
+This experiment helped demonstrate how to generate JWTs, verify them using middleware, and protect sensitive routes, ensuring only authorized users can perform banking operations.
+
+Learning Outcomes:
+
+Understand JWT generation and verification.
+
+Secure API endpoints using token-based authentication.
+
+Handle common errors in protected routes.
+
+Implement basic banking operations (balance, deposit, withdraw) with security.

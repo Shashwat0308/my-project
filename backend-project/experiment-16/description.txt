@@ -1,0 +1,17 @@
+In this experiment, we learned how to create and integrate middleware functions in an Express.js application. Middleware acts as a pipeline for handling requests before they reach route handlers.
+
+We implemented two custom middleware functions:
+
+Logging Middleware – Logs the HTTP method, request URL, and timestamp for every incoming request. This helps monitor and debug incoming traffic.
+
+Bearer Token Authentication Middleware – Secures protected routes by checking for an Authorization header containing a valid token (mysecrettoken). Requests without a valid token are denied access with appropriate error messages.
+
+The experiment included creating a public route accessible to everyone and a protected route accessible only with the correct Bearer token. We tested the system using curl or Postman to observe how logging and token-based authentication work together.
+
+Learning Outcomes:
+
+Understand Express.js middleware flow.
+
+Implement request logging and secure routes using tokens.
+
+Enforce access control for specific API endpoints.
