@@ -1,0 +1,10 @@
+1. React and Express Integration Experiment
+This experiment involved building a simple full-stack application where:
+
+The backend is an Express API serving product data.
+
+The frontend is a React app that uses Axios to fetch product data from the backend and display it.
+
+The focus was on API integration, handling asynchronous data fetching, loading and error states.
+
+The goal was to demonstrate fundamental client-server communication in a web application.

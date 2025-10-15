@@ -1,0 +1,11 @@
+This experiment focused on building a real-time chat app with a backend Node.js/Express server and a React frontend:
+
+The backend uses Socket.io to establish WebSocket connections for real-time bidirectional communication.
+
+The React frontend connects to the Socket.io server and sends/receives chat messages.
+
+The chat UI allows users to enter a name and send messages which are instantly broadcasted to all connected clients.
+
+It demonstrates real-time event handling, user connection management, and live UI updates without page reloads.
+
+Provides fundamentals of WebSocket programming enabling reactive, interactive web experiences.
