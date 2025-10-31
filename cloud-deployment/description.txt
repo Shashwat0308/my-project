@@ -1,0 +1,33 @@
+Docker Desktop Setup on Windows
+Docker Desktop is an application that enables you to build, ship, and run containerized applications on Windows. It includes Docker Engine, Docker CLI client, and other essential tools. Setting it up on Windows involves:
+
+Downloading and installing Docker Desktop from the official site.
+
+Enabling system features like Hyper-V and Windows Subsystem for Linux 2 (WSL 2), which Docker uses to run Linux containers efficiently on Windows.
+
+Configuring Docker to use WSL 2 backend for better performance.
+
+Starting Docker Desktop and verifying installation by running simple Docker commands.
+
+Ensuring Docker daemon is running smoothly without errors such as the pipe connection error.
+
+Docker Desktop abstracts complex container management and virtualization details, allowing developers to work with Linux containers natively on Windows 10/11. Once installed, you can build and run Docker images, containerize applications like React apps, and manage containers directly from your terminal or IDE.​
+
+Setting Up CI/CD Pipeline Using GitHub Actions
+GitHub Actions is a powerful automation platform integrated with GitHub that lets you create workflows to build, test, and deploy your projects automatically on events such as code pushes.
+
+Setting up a CI/CD pipeline for a React app using GitHub Actions involves:
+
+Creating a workflow file .github/workflows/main.yml in your project repo.
+
+Configuring the workflow to trigger on pushes to the main branch.
+
+Defining jobs that run on a specified OS (usually ubuntu-latest).
+
+Installing Node.js on the runner environment.
+
+Running commands to install dependencies, execute tests (npm test), and build the project (npm run build).
+
+Optionally adding deployment steps to platforms like GitHub Pages, Netlify, or AWS S3 with corresponding GitHub Actions.
+
+This setup ensures your React app is automatically built and tested whenever you push code, providing instant feedback and continuous integration. The deployment step can automate publishing your app, making it readily available to users without manual intervention.
