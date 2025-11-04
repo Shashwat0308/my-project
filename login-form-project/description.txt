@@ -1,0 +1,12 @@
+This experiment guides you through building a simple login form in React using foundational state management concepts. 
+The primary goal is to help you understand how React's useState hook works for capturing and controlling form data at the component level.
+ As you follow the process, you will create a new React project from scratch, structure it using the recommended folder organization, and implement the logic needed to handle both user inputs and basic validation.
+
+ Through this hands-on activity, you will design a user interface that features inputs for both username and password. As you type into these fields, the form data is updated in real time using React state, making your app responsive and interactive.
+  When the login button is pressed, the app checks whether the user has filled in both fields. If either the username or password field is empty, a validation error message immediately appears, guiding the user to complete all required inputs before submitting.
+
+  A key step in this exercise is connecting user actions (like typing and pressing submit) to updates in your component's state. 
+  You’ll see how to capture each change event and store it within local state variables. Upon a successful form submission, the entered credentials (username and password) are logged to the browser console, letting you observe and verify how state reflects user input. This real-time logging is useful for debugging and understanding how your component responds dynamically to interaction.
+
+By the end of the experiment, you will have a clear, working example of how to build and validate controlled forms in React using state.
+ This lays a strong foundation for more advanced React topics, such as connecting forms to backend APIs or scaling up to more sophisticated state management solutions. The skills you develop here are essential for any modern front-end developer working with React.
