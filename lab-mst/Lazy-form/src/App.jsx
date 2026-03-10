@@ -1,29 +1,54 @@
 import { Suspense, lazy, useMemo, useState } from "react";
 import "./App.css";
 
+const HeaderImage = lazy(() => import("./HeaderImage"));
 const Form = lazy(() => import("./Form"));
 
 export default function App() {
+  const [showImage, setShowImage] = useState(false);
   const [showForm, setShowForm] = useState(false);
   const toggleLabel = showForm ? "Hide form" : "Show form";
+  const imageLabel = showImage ? "Hide image" : "Load image";
 
   const intro = useMemo(
     () =>
-      "Click the button to lazy-load the form component.\n" +
-      "Validation runs locally and shows inline errors on blur/submission.",
+      "This portal demo lazy-loads an image and a form module on demand.\n" +
+      "Click the buttons to load each piece when you need it.",
     []
   );
 
   return (
     <div className="app">
-      <h1>React Lazy Load + Form Validation (Lab MST)</h1>
+      <h1>Portal</h1>
       <p className="intro" style={{ whiteSpace: "pre-line" }}>
         {intro}
       </p>
 
-      <button className="toggle" onClick={() => setShowForm((v) => !v)}>
-        {toggleLabel}
-      </button>
+      <div className="buttonRow">
+        <button
+          className="toggle"
+          onClick={() =>
+            setShowImage((prev) => {
+              const next = !prev;
+              if (next) {
+                setShowForm(true);
+              }
+              return next;
+            })
+          }
+        >
+          {imageLabel}
+        </button>
+        <button className="toggle" onClick={() => setShowForm((v) => !v)}>
+          {toggleLabel}
+        </button>
+      </div>
+
+      {showImage && (
+        <Suspense fallback={<div className="imgLoading">Loading image…</div>}>
+          <HeaderImage />
+        </Suspense>
+      )}
 
       <div className="formContainer">
         {showForm ? (
