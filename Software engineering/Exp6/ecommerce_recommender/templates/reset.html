@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+{% block title %}Reset Password - E-Shop{% endblock %}
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-5">
+        <div class="card shadow">
+            <div class="card-body">
+                <h2 class="card-title text-center mb-4">
+                    <i class="bi bi-lock"></i> Set New Password
+                </h2>
+                <form method="POST">
+                    {{ form.hidden_tag() }}
+                    <input type="hidden" name="token" value="{{ token }}">
+                    <div class="mb-3">
+                        {{ form.password.label(class="form-label") }}
+                        {{ form.password(class="form-control") }}
+                    </div>
+                    <div class="mb-3">
+                        {{ form.confirm_password.label(class="form-label") }}
+                        {{ form.confirm_password(class="form-control") }}
+                    </div>
+                    {{ form.submit(class="btn btn-success w-100") }}
+                </form>
+                <div class="text-center mt-3">
+                    <a href="{{ url_for('login') }}">Back to Login</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

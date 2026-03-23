@@ -1,0 +1,52 @@
+{% extends 'base.html' %}
+{% block title %}Dashboard - Internship Tracker{% endblock %}
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h1>Welcome, {{ current_user.name }}!</h1>
+</div>
+<div class="row">
+    <div class="col-md-8">
+        <div class="card shadow">
+            <div class="card-header bg-primary text-white">
+                <h5>Your Applications</h5>
+            </div>
+            <div class="card-body">
+                <p class="text-muted">Track your internship applications here.</p>
+                <button class="btn btn-primary">Add New Application</button>
+                <div class="table-responsive mt-3">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Company</th>
+                                <th>Role</th>
+                                <th>Status</th>
+                                <th>Date</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Google</td>
+                                <td>Software Engineer Intern</td>
+                                <td><span class="badge bg-success">Interview</span></td>
+                                <td>2024-01-15</td>
+                            </tr>
+                            <!-- Placeholder - expand later -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card shadow">
+            <div class="card-header bg-success text-white">
+                <h6>Quick Actions</h6>
+            </div>
+            <div class="card-body">
+                <a href="#" class="btn btn-outline-primary w-100 mb-2">View Profile</a>
+                <a href="#" class="btn btn-outline-info w-100 mb-2">Find Internships</a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
