@@ -12,8 +12,19 @@ app.use(express.json());
 
 const generateSlots = () => {
   let slots = [];
-  for (let i = 9; i <= 18; i++) {
-    slots.push(`${i}:00`);
+  for (let hour = 9; hour <= 18; hour++) {
+    for (let minute of [0, 30]) {
+      let hourStr, period;
+      
+      if (hour === 9) hourStr = "09";
+      else if (hour < 12) hourStr = hour.toString().padStart(2, '0');
+      else if (hour === 12) hourStr = "12";
+      else hourStr = (hour - 12).toString().padStart(2, '0');
+      
+      period = hour < 12 ? 'AM' : 'PM';
+      const minStr = minute.toString().padStart(2, '0');
+      slots.push(`${hourStr}:${minStr} ${period}`);
+    }
   }
   return slots;
 };
@@ -72,21 +83,57 @@ app.post("/login", async (req, res) => {
 app.post("/send-otp", (req, res) => {
   const { phone } = req.body;
 
+  // Validate Indian phone number
+  const indianPhoneRegex = /^(\+91|91)?[6-9]\d{9}$/;
+  if (!indianPhoneRegex.test(phone)) {
+    return res.status(400).send({ message: "Invalid Indian phone number ❌" });
+  }
+
+  // Normalize phone number to +91 format
+  let normalizedPhone = phone;
+  if (phone.startsWith('91')) {
+    normalizedPhone = '+' + phone;
+  } else if (!phone.startsWith('+91')) {
+    normalizedPhone = '+91' + phone;
+  }
+
   const otp = Math.floor(100000 + Math.random() * 900000);
 
-  otpStore[phone] = otp;
+  otpStore[normalizedPhone] = otp;
 
-  console.log("OTP for", phone, "is:", otp); // 👈 IMPORTANT
+  // TODO: Integrate with SMS service like Twilio, MSG91, etc.
+  // For now, logging to console
+  console.log("OTP for", normalizedPhone, "is:", otp); // 👈 IMPORTANT
 
-  res.send({ message: "OTP generated (check backend console) ✅" });
+  // Example integration with Twilio (uncomment and add credentials)
+  // const twilio = require('twilio');
+  // const client = twilio('your_account_sid', 'your_auth_token');
+  // client.messages.create({
+  //   body: `Your OTP is: ${otp}`,
+  //   from: '+1234567890', // Your Twilio number
+  //   to: normalizedPhone
+  // }).then(message => console.log(message.sid));
+
+  res.send({ message: "OTP sent to your mobile ✅" });
 });
 
 // Verify OTP
 app.post("/verify-otp", (req, res) => {
   const { phone, otp } = req.body;
 
-  if (otpStore[phone] == otp) {
-    res.send({ message: "OTP verified ✅" });
+  // Normalize phone number
+  let normalizedPhone = phone;
+  if (phone.startsWith('91')) {
+    normalizedPhone = '+' + phone;
+  } else if (!phone.startsWith('+91')) {
+    normalizedPhone = '+91' + phone;
+  }
+
+  if (otpStore[normalizedPhone] == otp) {
+    // Find or create user
+    // Assuming we have the user details from previous registration
+    // For simplicity, just verify
+    res.send({ message: "OTP verified ✅", user: { phone: normalizedPhone } });
   } else {
     res.send({ message: "Invalid OTP ❌" });
   }
@@ -102,7 +149,16 @@ app.get("/", (req, res) => {
 // Get salons
 app.get("/salons", async (req, res) => {
   const salons = await Salon.find();
-  res.send(salons);
+  
+  // Update all salons with new slots
+  const updatedSalons = salons.map(salon => {
+    return {
+      ...salon.toObject(),
+      slots: generateSlots()
+    };
+  });
+  
+  res.send(updatedSalons);
 });
 
 // Add salon

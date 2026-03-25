@@ -104,6 +104,11 @@ const verifyOtp = async () => {
 
   const data = await res.json();
   alert(data.message);
+
+  if (data.user) {
+    setUser(data.user);
+    localStorage.setItem("user", JSON.stringify(data.user));
+  }
 };
 
 return (
@@ -122,7 +127,7 @@ return (
 
         {/* Phone */}
         <input
-          placeholder="Phone"
+          placeholder="Phone (e.g., +919876543210 or 9876543210)"
           onChange={(e) => setPhone(e.target.value)}
         /><br />
 
@@ -152,14 +157,10 @@ return (
 
     {/* 👋 USER + LOGOUT */}
     {user && (
-      <div style={{ textAlign: "center" }}>
-        <h2>Welcome {user.name} 👋</h2>
-        <button onClick={() => {
-          setUser(null);
-          localStorage.removeItem("user");
-        }}>
-          Logout
-        </button>
+      <div className="logout-container">
+        <div style={{ textAlign: "center", paddingTop: "10px" }}>
+          <h2>Welcome {user.name} 👋</h2>
+        </div>
       </div>
     )}
 
@@ -203,15 +204,12 @@ return (
           </select>
 
           <h4>Select Time:</h4>
-          <div>
+          <div className="time-slots-container">
             {salon.slots.map((slot, i) => (
               <button
                 key={i}
                 onClick={() => setSelectedTime(slot)}
-                style={{
-                  backgroundColor:
-                    selectedTime === slot ? "#4caf50" : "#ff4081",
-                }}
+                className={`time-slot-button ${selectedTime === slot ? "selected" : ""}`}
               >
                 {slot}
               </button>
@@ -225,10 +223,21 @@ return (
     ))}
   </div>
   )}
+
+    {/* LOGOUT BUTTON - BOTTOM FIXED */}
+    {user && (
+      <button 
+        className="logout-button"
+        onClick={() => {
+          setUser(null);
+          localStorage.removeItem("user");
+        }}
+      >
+        🚪 Logout
+      </button>
+    )}
 </div>
-  
-  
-);
+  );
 }
 
 export default App;
