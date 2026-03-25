@@ -10,6 +10,7 @@ function App() {
 const [name, setName] = useState("");
 const [phone, setPhone] = useState("");
 const [email, setEmail] = useState("");
+const [otp, setOtp] = useState("");
 
   // Fetch salons from backend
   useEffect(() => {
@@ -83,29 +84,65 @@ const book = async (salonId) => {
     setSelectedTime("");
   };
 
- return (
+
+  const sendOtp = async () => {
+  await fetch("http://localhost:5000/send-otp", {
+    method: "POST",
+    headers: {"Content-Type": "application/json"},
+    body: JSON.stringify({ phone })
+  });
+
+  alert("OTP sent (check backend console)");
+};
+
+const verifyOtp = async () => {
+  const res = await fetch("http://localhost:5000/verify-otp", {
+    method: "POST",
+    headers: {"Content-Type": "application/json"},
+    body: JSON.stringify({ phone, otp })
+  });
+
+  const data = await res.json();
+  alert(data.message);
+};
+
+return (
   <div>
 
-    {/* 🔐 LOGIN / REGISTER */}
+    {/* 🔐 LOGIN + OTP */}
     {!user && (
-     <div className="auth-box">
+      <div className="auth-box">
         <h2>Login / Register</h2>
 
+        {/* Name (for register) */}
         <input
           placeholder="Name"
           onChange={(e) => setName(e.target.value)}
-        /><br /><br />
+        /><br />
 
+        {/* Phone */}
         <input
           placeholder="Phone"
           onChange={(e) => setPhone(e.target.value)}
-        /><br /><br />
+        /><br />
 
+        {/* Email */}
         <input
           placeholder="Email"
           onChange={(e) => setEmail(e.target.value)}
-        /><br /><br />
+        /><br />
 
+        {/* OTP SECTION */}
+        <button onClick={sendOtp}>Send OTP</button><br /><br />
+
+        <input
+          placeholder="Enter OTP"
+          onChange={(e) => setOtp(e.target.value)}
+        /><br />
+
+        <button onClick={verifyOtp}>Verify OTP</button><br /><br />
+
+        {/* Normal Auth */}
         <button onClick={register}>Register</button>
         <button onClick={login} style={{ marginLeft: "10px" }}>
           Login
@@ -113,22 +150,40 @@ const book = async (salonId) => {
       </div>
     )}
 
-    {/* 👋 SHOW USER */}
+    {/* 👋 USER + LOGOUT */}
     {user && (
-  <div style={{ textAlign: "center", marginBottom: "10px" }}>
-    <h2>Welcome {user.name} 👋</h2>
-    <button onClick={() => {
-  setUser(null);
-  localStorage.removeItem("user");
-}}>
-  Logout
-</button>
+      <div style={{ textAlign: "center" }}>
+        <h2>Welcome {user.name} 👋</h2>
+        <button onClick={() => {
+          setUser(null);
+          localStorage.removeItem("user");
+        }}>
+          Logout
+        </button>
+      </div>
+    )}
+
+    {user && (
+  <div style={{ textAlign: "center", margin: "20px" }}>
+    <h3>Your Preferences</h3>
+
+    <select>
+      <option>Hair</option>
+      <option>Skin</option>
+      <option>Wellness</option>
+    </select>
+
+    <select style={{ marginLeft: "10px" }}>
+      <option>Low Budget</option>
+      <option>Medium</option>
+      <option>Premium</option>
+    </select>
   </div>
 )}
 
-
-    {/* 💇 SALON LIST */}
-    <div className="container">
+    {/* 💇 SALONS */}
+    {user && (
+  <div className="container">
       {salons.map((salon) => (
         <div key={salon._id} className="salon-card">
           <h3>{salon.name}</h3>
@@ -163,17 +218,16 @@ const book = async (salonId) => {
             ))}
           </div>
 
-          <button
-            onClick={() => book(salon._id)}
-            style={{ marginTop: "10px" }}
-          >
-            Book Appointment
-          </button>
-        </div>
-      ))}
-    </div>
-
+        <button onClick={() => book(salon._id)}>
+          Book Appointment
+        </button>
+      </div>
+    ))}
   </div>
+  )}
+</div>
+  
+  
 );
 }
 

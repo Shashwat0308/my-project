@@ -3,9 +3,22 @@ const express = require("express");
 const mongoose = require("mongoose");
 const cors = require("cors");
 
+//otp based login and registration system
+const otpStore = {};
+
 const app = express();
 app.use(cors());
 app.use(express.json());
+
+const generateSlots = () => {
+  let slots = [];
+  for (let i = 9; i <= 18; i++) {
+    slots.push(`${i}:00`);
+  }
+  return slots;
+};
+
+slots: generateSlots()
 
 
 
@@ -54,6 +67,32 @@ app.post("/login", async (req, res) => {
 
   res.send({ message: "Login successful ✅", user });
 });
+
+
+app.post("/send-otp", (req, res) => {
+  const { phone } = req.body;
+
+  const otp = Math.floor(100000 + Math.random() * 900000);
+
+  otpStore[phone] = otp;
+
+  console.log("OTP for", phone, "is:", otp); // 👈 IMPORTANT
+
+  res.send({ message: "OTP generated (check backend console) ✅" });
+});
+
+// Verify OTP
+app.post("/verify-otp", (req, res) => {
+  const { phone, otp } = req.body;
+
+  if (otpStore[phone] == otp) {
+    res.send({ message: "OTP verified ✅" });
+  } else {
+    res.send({ message: "Invalid OTP ❌" });
+  }
+});
+
+
 
 // Test route
 app.get("/", (req, res) => {
