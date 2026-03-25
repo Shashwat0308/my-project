@@ -1,0 +1,95 @@
+/* Login box */
+.auth-box {
+  max-width: 300px;
+  margin: 20px auto;
+  padding: 20px;
+  border-radius: 12px;
+  background: #fff;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+  text-align: center;
+}
+
+/* Inputs */
+.auth-box input {
+  width: 90%;
+  padding: 8px;
+  margin: 8px 0;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+}
+
+/* Buttons */
+.auth-box button {
+  margin: 5px;
+  padding: 8px 12px;
+}
+
+/* Title */
+h2 {
+  color: #ff4081;
+}
+
+/* Container for all salons */
+.container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  padding: 20px;
+}
+
+/* Card for each salon */
+.salon-card {
+  border: 1px solid #ddd;
+  padding: 20px;
+  margin: 15px;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  background-color: #fff;
+  width: 300px;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+/* Hover effect */
+.salon-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 6px 18px rgba(0,0,0,0.15);
+}
+
+/* Salon title */
+.salon-card h3 {
+  color: #ff4081;
+  margin-bottom: 5px;
+}
+
+/* Buttons */
+button {
+  padding: 8px 15px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  background-color: #ff4081;
+  color: white;
+  margin: 5px 0;
+}
+
+button:hover {
+  background-color: #e73370;
+}
+
+/* Select dropdown */
+select {
+  padding: 6px;
+  margin: 5px 0;
+  border-radius: 6px;
+  border: 1px solid #ddd;
+}
+
+/* Headings */
+h1 {
+  text-align: center;
+  color: #333;
+}
+h4 {
+  margin: 10px 0 5px 0;
+  color: #555;
+}
