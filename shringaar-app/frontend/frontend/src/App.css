@@ -1,14 +1,441 @@
-/* Login box */
-.auth-box {
-  max-width: 350px;
-  margin: 40px auto;
-  padding: 30px;
-  border-radius: 20px;
-  background: rgba(255, 255, 255, 0.95);
-  box-shadow: 0 8px 25px rgba(255, 20, 147, 0.3);
+/* Home Page */
+.home-page {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 80vh;
+  padding: 40px;
+}
+
+.welcome-section {
   text-align: center;
+  max-width: 600px;
+}
+
+.welcome-title {
+  font-size: 3.5rem;
+  font-weight: bold;
+  color: #ffffff;
+  text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.7);
+  margin: 0 0 20px 0;
+  font-family: 'Georgia', serif;
+  line-height: 1.2;
+}
+
+.welcome-subtitle {
+  font-size: 1.4rem;
+  color: #ffe4e1;
+  margin: 0 0 40px 0;
+  font-weight: 300;
+}
+
+.login-btn {
+  padding: 16px 40px;
+  font-size: 18px;
+  font-weight: bold;
+  background: linear-gradient(45deg, #ff4081, #ff69b4);
+  color: white;
+  border: 2px solid #ffd700;
+  border-radius: 50px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 6px 20px rgba(255, 64, 129, 0.4);
+}
+
+.login-btn:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 10px 28px rgba(255, 64, 129, 0.6);
+  background: linear-gradient(45deg, #ff69b4, #ff1493);
+}
+
+/* Login Page */
+.login-page {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 40px 20px;
+}
+
+.login-header {
+  text-align: center;
+  margin-bottom: 40px;
+  position: relative;
+}
+
+.back-btn {
+  position: absolute;
+  left: 0;
+  top: 0;
+  padding: 10px 20px;
+  background: rgba(255, 255, 255, 0.9);
+  border: 1px solid #ffb6c1;
+  border-radius: 25px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: all 0.3s ease;
+}
+
+.back-btn:hover {
+  background: rgba(255, 255, 255, 1);
+  transform: translateY(-2px);
+}
+
+.login-header h2 {
+  color: #ffffff;
+  font-size: 2.5rem;
+  margin: 0;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+/* Login Section */
+.login-section {
+  margin-bottom: 60px;
+}
+
+.login-box {
+  background: rgba(255, 255, 255, 0.95);
+  padding: 30px;
+  border-radius: 15px;
+  box-shadow: 0 8px 25px rgba(255, 20, 147, 0.3);
   border: 2px solid #ffd700;
   backdrop-filter: blur(10px);
+  max-width: 400px;
+  margin: 0 auto;
+}
+
+.login-box h3 {
+  color: #ff1493;
+  font-family: 'Georgia', serif;
+  font-size: 24px;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.login-box input {
+  width: 90%;
+  padding: 12px;
+  margin: 10px 0;
+  border-radius: 8px;
+  border: 2px solid #ffb6c1;
+  font-size: 16px;
+  transition: border-color 0.3s;
+}
+
+.login-box input:focus {
+  outline: none;
+  border-color: #ff69b4;
+  box-shadow: 0 0 5px rgba(255, 105, 180, 0.5);
+}
+
+.login-box button {
+  width: 100%;
+  padding: 14px;
+  margin: 15px 0;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+  background: linear-gradient(45deg, #ff4081, #ff69b4);
+  color: white;
+  font-weight: bold;
+  font-size: 16px;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.login-box button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 15px rgba(255, 64, 129, 0.4);
+}
+
+/* Register Section */
+.register-section {
+  border-top: 2px solid rgba(255, 215, 0, 0.3);
+  padding-top: 40px;
+}
+
+.register-box {
+  background: rgba(255, 255, 255, 0.95);
+  padding: 30px;
+  border-radius: 15px;
+  box-shadow: 0 8px 25px rgba(255, 20, 147, 0.3);
+  border: 2px solid #ffd700;
+  backdrop-filter: blur(10px);
+  max-width: 400px;
+  margin: 0 auto;
+}
+
+.register-box h3 {
+  color: #ff1493;
+  font-family: 'Georgia', serif;
+  font-size: 24px;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.register-box input {
+  width: 90%;
+  padding: 12px;
+  margin: 8px 0;
+  border-radius: 8px;
+  border: 2px solid #ffb6c1;
+  font-size: 16px;
+  transition: border-color 0.3s;
+}
+
+.register-box input:focus {
+  outline: none;
+  border-color: #ff69b4;
+  box-shadow: 0 0 5px rgba(255, 105, 180, 0.5);
+}
+
+/* OTP Section within Register */
+.otp-section {
+  margin-top: 20px;
+  padding: 20px;
+  background: rgba(255, 182, 193, 0.1);
+  border-radius: 10px;
+  border: 1px solid rgba(255, 182, 193, 0.3);
+}
+
+.otp-section button {
+  width: 100%;
+  padding: 12px;
+  margin: 8px 0;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+  background: linear-gradient(45deg, #ff69b4, #ff1493);
+  color: white;
+  font-weight: bold;
+  font-size: 16px;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.otp-section button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 15px rgba(255, 105, 180, 0.4);
+}
+
+.otp-section input {
+  width: 90%;
+  padding: 12px;
+  margin: 8px 0;
+  border-radius: 8px;
+  border: 2px solid #ffb6c1;
+  font-size: 16px;
+  transition: border-color 0.3s;
+}
+
+.otp-section input:focus {
+  outline: none;
+  border-color: #ff69b4;
+  box-shadow: 0 0 5px rgba(255, 105, 180, 0.5);
+}
+
+/* Container for all salons */
+.container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  padding: 20px;
+}
+
+/* Card for each salon */
+.salon-card {
+  border: 2px solid #ffd700;
+  padding: 25px;
+  margin: 20px;
+  border-radius: 20px;
+  box-shadow: 0 8px 20px rgba(255, 215, 0, 0.2);
+  background: linear-gradient(145deg, rgba(255, 255, 255, 0.9), rgba(255, 182, 193, 0.1));
+  width: 320px;
+  transition: transform 0.3s, box-shadow 0.3s;
+  backdrop-filter: blur(5px);
+}
+
+/* Hover effect */
+.salon-card:hover {
+  transform: translateY(-8px) scale(1.02);
+  box-shadow: 0 12px 30px rgba(255, 215, 0, 0.4);
+}
+
+/* Salon title */
+.salon-card h3 {
+  color: #ff1493;
+  margin-bottom: 10px;
+  font-family: 'Georgia', serif;
+  font-size: 24px;
+}
+
+/* Buttons */
+button {
+  padding: 12px 18px;
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
+  background: linear-gradient(45deg, #ff4081, #ff69b4);
+  color: white;
+  margin: 8px 4px;
+  font-weight: bold;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 15px rgba(255, 64, 129, 0.4);
+}
+
+/* Select dropdown */
+select {
+  padding: 10px;
+  margin: 8px 0;
+  border-radius: 10px;
+  border: 2px solid #ffb6c1;
+  font-size: 16px;
+  transition: border-color 0.3s;
+}
+
+select:focus {
+  outline: none;
+  border-color: #ff69b4;
+  box-shadow: 0 0 5px rgba(255, 105, 180, 0.5);
+}
+
+/* Headings */
+h1 {
+  text-align: center;
+  color: #333;
+  font-family: 'Georgia', serif;
+}
+
+.preferences {
+  padding: 16px;
+  border-radius: 16px;
+  background: linear-gradient(135deg, rgba(255, 192, 203, 0.25), rgba(255, 182, 193, 0.15));
+  border: 2px solid rgba(255, 105, 180, 0.35);
+  box-shadow: 0 6px 18px rgba(255, 105, 180, 0.25);
+  margin-bottom: 20px;
+}
+
+.preferences-title {
+  color: #d32f6a;
+  font-size: 1.9rem;
+  text-shadow: 0 2px 8px rgba(255, 255, 255, 0.65);
+}
+
+.preferences select {
+  border-color: #ff69b4;
+  color: #c2185b;
+  font-weight: bold;
+}
+
+h4 {
+  margin: 15px 0 8px 0;
+  color: #8b008b;
+  font-weight: bold;
+}
+
+/* Time slots container */
+.time-slots-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 8px;
+  margin: 12px 0;
+  padding: 10px;
+  background: rgba(255, 182, 193, 0.1);
+  border-radius: 12px;
+}
+
+/* Time slot button styling */
+.time-slot-button {
+  padding: 10px 14px;
+  border: 2px solid #ffb6c1;
+  border-radius: 12px;
+  cursor: pointer;
+  background: linear-gradient(135deg, #ffffff, #ffe4e1);
+  color: #ff1493;
+  margin: 4px;
+  font-weight: bold;
+  font-size: 14px;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 8px rgba(255, 105, 180, 0.2);
+}
+
+.time-slot-button:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 4px 12px rgba(255, 105, 180, 0.3);
+  border-color: #ff69b4;
+}
+
+/* Time slot button when selected */
+.time-slot-button.selected {
+  background: linear-gradient(135deg, #ff69b4, #ff1493);
+  color: white;
+  border-color: #ff1493;
+  font-size: 15px;
+  padding: 11px 16px;
+  transform: scale(1.1);
+  box-shadow: 0 6px 18px rgba(255, 105, 180, 0.5), inset 0 -2px 5px rgba(0, 0, 0, 0.2);
+}
+
+/* Logout container at top */
+.logout-container {
+  background: transparent;
+  padding: 20px 0;
+}
+
+/* Fixed logout button at bottom */
+.logout-button {
+  position: fixed;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  padding: 14px 30px;
+  background: linear-gradient(45deg, #ff4081, #ff69b4) !important;
+  color: white !important;
+  border: 2px solid #ffd700 !important;
+  border-radius: 50px !important;
+  font-weight: bold;
+  font-size: 16px;
+  cursor: pointer;
+  box-shadow: 0 6px 20px rgba(255, 105, 180, 0.4);
+  transition: all 0.3s ease;
+  z-index: 1000;
+}
+
+.logout-button:hover {
+  transform: translateX(-50%) translateY(-3px) !important;
+  box-shadow: 0 10px 28px rgba(255, 105, 180, 0.6) !important;
+}
+
+/* Main content area */
+.main-content {
+  padding: 0 40px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+/* Responsive design for mobile */
+@media (max-width: 768px) {
+  .home-page {
+    padding: 20px;
+  }
+  
+  .welcome-title {
+    font-size: 2.5rem;
+  }
+  
+  .login-page {
+    padding: 20px 10px;
+  }
+  
+  .login-box, .register-box {
+    max-width: 100%;
+    margin: 0 10px;
+  }
+  
+  .main-content {
+    padding: 0 20px;
+  }
 }
 
 /* Inputs */
@@ -213,10 +640,11 @@ h4 {
   box-shadow: 0 6px 18px rgba(255, 105, 180, 0.5), inset 0 -2px 5px rgba(0, 0, 0, 0.2);
 }
 
-/* Logout container at top */
-.logout-container {
-  background: transparent;
-  padding: 20px 0;
+/* Main content area */
+.main-content {
+  padding: 0 40px;
+  max-width: 1200px;
+  margin: 0 auto;
 }
 
 /* Fixed logout button at bottom */

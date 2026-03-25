@@ -81,11 +81,17 @@ app.post("/login", async (req, res) => {
 
 
 app.post("/send-otp", (req, res) => {
+  console.log("� SEND-OTP ROUTE HIT!");
+  console.log("�📱 Send OTP request received:", req.body);
+
   const { phone } = req.body;
 
   // Validate Indian phone number
   const indianPhoneRegex = /^(\+91|91)?[6-9]\d{9}$/;
+  console.log("🔍 Phone validation for:", phone, "Regex match:", indianPhoneRegex.test(phone));
+
   if (!indianPhoneRegex.test(phone)) {
+    console.log("❌ Invalid phone number:", phone);
     return res.status(400).send({ message: "Invalid Indian phone number ❌" });
   }
 
@@ -101,9 +107,12 @@ app.post("/send-otp", (req, res) => {
 
   otpStore[normalizedPhone] = otp;
 
+  // Debug logs
+  console.log("✅ OTP GENERATED for", normalizedPhone, "is:", otp); // 👈 IMPORTANT
+  console.log("🔐 otpStore now:", otpStore);
+
   // TODO: Integrate with SMS service like Twilio, MSG91, etc.
   // For now, logging to console
-  console.log("OTP for", normalizedPhone, "is:", otp); // 👈 IMPORTANT
 
   // Example integration with Twilio (uncomment and add credentials)
   // const twilio = require('twilio');
@@ -114,12 +123,12 @@ app.post("/send-otp", (req, res) => {
   //   to: normalizedPhone
   // }).then(message => console.log(message.sid));
 
-  res.send({ message: "OTP sent to your mobile ✅" });
+  res.send({ message: "OTP sent to your mobile ✅", otp }); // Dev-only: helps verify front-end flow + debug
 });
 
 // Verify OTP
-app.post("/verify-otp", (req, res) => {
-  const { phone, otp } = req.body;
+app.post("/verify-otp", async (req, res) => {
+  const { name, phone, email, otp } = req.body;
 
   // Normalize phone number
   let normalizedPhone = phone;
@@ -131,9 +140,13 @@ app.post("/verify-otp", (req, res) => {
 
   if (otpStore[normalizedPhone] == otp) {
     // Find or create user
-    // Assuming we have the user details from previous registration
-    // For simplicity, just verify
-    res.send({ message: "OTP verified ✅", user: { phone: normalizedPhone } });
+    let user = await User.findOne({ phone: normalizedPhone });
+    if (!user) {
+      user = new User({ name, phone: normalizedPhone, email });
+      await user.save();
+    }
+    
+    res.send({ message: "OTP verified and user registered ✅", user });
   } else {
     res.send({ message: "Invalid OTP ❌" });
   }
