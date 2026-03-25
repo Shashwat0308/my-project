@@ -5,6 +5,7 @@ const salonSchema = new mongoose.Schema({
   location: String,
   services: [
     {
+      category: String,
       name: String,
       price: Number
     }

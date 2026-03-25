@@ -3,20 +3,38 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  min-height: 80vh;
+  min-height: 100vh;
   padding: 40px;
+  background-image: url('https://images.fresha.com/locations/location-profile-images/336690/1890960/ae7f49a2-e813-41ba-8cb8-197060f9ad98.jpg?class=width-small');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  position: relative;
+}
+
+.home-page::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.4);
+  z-index: 1;
 }
 
 .welcome-section {
   text-align: center;
   max-width: 600px;
+  position: relative;
+  z-index: 2;
 }
 
 .welcome-title {
   font-size: 3.5rem;
   font-weight: bold;
   color: #ffffff;
-  text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.7);
+  text-shadow: 4px 4px 8px rgba(0, 0, 0, 0.8), 0 0 20px rgba(0, 0, 0, 0.5);
   margin: 0 0 20px 0;
   font-family: 'Georgia', serif;
   line-height: 1.2;
@@ -24,9 +42,10 @@
 
 .welcome-subtitle {
   font-size: 1.4rem;
-  color: #ffe4e1;
+  color: #ffffff;
   margin: 0 0 40px 0;
   font-weight: 300;
+  text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.7);
 }
 
 .login-btn {
@@ -35,16 +54,19 @@
   font-weight: bold;
   background: linear-gradient(45deg, #ff4081, #ff69b4);
   color: white;
-  border: 2px solid #ffd700;
+  border: 3px solid #ffd700;
   border-radius: 50px;
   cursor: pointer;
   transition: all 0.3s ease;
-  box-shadow: 0 6px 20px rgba(255, 64, 129, 0.4);
+  box-shadow: 0 6px 20px rgba(255, 64, 129, 0.6), 0 0 30px rgba(255, 215, 0, 0.3);
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+  position: relative;
+  z-index: 3;
 }
 
 .login-btn:hover {
   transform: translateY(-3px);
-  box-shadow: 0 10px 28px rgba(255, 64, 129, 0.6);
+  box-shadow: 0 10px 28px rgba(255, 64, 129, 0.8), 0 0 40px rgba(255, 215, 0, 0.5);
   background: linear-gradient(45deg, #ff69b4, #ff1493);
 }
 
@@ -327,6 +349,19 @@ h1 {
   font-weight: bold;
 }
 
+/* Service selection styling */
+.salon-card select {
+  border-color: #ff69b4;
+  color: #c2185b;
+  font-weight: bold;
+  margin: 8px 0;
+}
+
+.salon-card select:focus {
+  border-color: #ff1493;
+  box-shadow: 0 0 5px rgba(255, 20, 147, 0.5);
+}
+
 h4 {
   margin: 15px 0 8px 0;
   color: #8b008b;
@@ -418,16 +453,30 @@ h4 {
 @media (max-width: 768px) {
   .home-page {
     padding: 20px;
+    min-height: 100vh;
+    background-attachment: scroll;
   }
-  
+
   .welcome-title {
     font-size: 2.5rem;
+    text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.9), 0 0 15px rgba(0, 0, 0, 0.6);
   }
-  
+
+  .welcome-subtitle {
+    font-size: 1.2rem;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
+  }
+
+  .login-btn {
+    padding: 14px 35px;
+    font-size: 16px;
+    box-shadow: 0 4px 15px rgba(255, 64, 129, 0.7), 0 0 25px rgba(255, 215, 0, 0.4);
+  }
+
   .login-page {
     padding: 20px 10px;
   }
-  
+
   .login-box, .register-box {
     max-width: 100%;
     margin: 0 10px;
@@ -435,6 +484,28 @@ h4 {
   
   .main-content {
     padding: 0 20px;
+  }
+}
+
+/* Extra small screens */
+@media (max-width: 480px) {
+  .home-page {
+    padding: 15px;
+  }
+
+  .welcome-title {
+    font-size: 2.2rem;
+    margin-bottom: 15px;
+  }
+
+  .welcome-subtitle {
+    font-size: 1.1rem;
+    margin-bottom: 30px;
+  }
+
+  .login-btn {
+    padding: 12px 30px;
+    font-size: 15px;
   }
 }
 

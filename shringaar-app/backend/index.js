@@ -29,6 +29,116 @@ const generateSlots = () => {
   return slots;
 };
 
+const generateServices = () => {
+  return [
+    // HAIR SERVICES
+    { category: "Hair", name: "Hair Treatments", price: 1500 },
+    { category: "Hair", name: "Hair Spa & Deep Conditioning", price: 2000 },
+    { category: "Hair", name: "Keratin Treatment", price: 3500 },
+    { category: "Hair", name: "Hair Smoothening", price: 3000 },
+    { category: "Hair", name: "Hair Coloring", price: 2500 },
+    { category: "Hair", name: "Highlighting & Balayage", price: 4000 },
+    { category: "Hair", name: "Hair Straightening", price: 2800 },
+    { category: "Hair", name: "Hair Perming", price: 3200 },
+    { category: "Hair", name: "Scalp Treatment & Massage", price: 1200 },
+    { category: "Hair", name: "Hot Oil Treatment", price: 1800 },
+    { category: "Hair", name: "Anti-Dandruff Treatment", price: 1600 },
+    { category: "Hair", name: "Hair Styling", price: 800 },
+    { category: "Hair", name: "Bridal Makeup & Hair", price: 5000 },
+    { category: "Hair", name: "Party Makeup & Hair", price: 3500 },
+    { category: "Hair", name: "Daily Styling", price: 600 },
+    { category: "Hair", name: "Hair Cutting & Styling", price: 1000 },
+    { category: "Hair", name: "Bridal Makeup Trial", price: 2000 },
+    { category: "Hair", name: "Hair Extensions (Clip-in, Tape-in, Sew-in)", price: 2500 },
+    { category: "Hair", name: "Hair Transplant Consultation", price: 500 },
+    { category: "Hair", name: "Hair Removal", price: 800 },
+    { category: "Hair", name: "Permanent Hair Removal", price: 1500 },
+    { category: "Hair", name: "Laser Hair Removal", price: 2000 },
+    { category: "Hair", name: "Waxing", price: 500 },
+    { category: "Hair", name: "Threading", price: 200 },
+    { category: "Hair", name: "Bleaching", price: 600 },
+    { category: "Hair", name: "Hair Removal Cream", price: 300 },
+
+    // SKIN SERVICES
+    { category: "Skin", name: "Basic Facial", price: 1200 },
+    { category: "Skin", name: "Anti-Aging Facial", price: 2500 },
+    { category: "Skin", name: "Acne Treatment Facial", price: 1800 },
+    { category: "Skin", name: "Brightening Facial", price: 2000 },
+    { category: "Skin", name: "De-Tan Facial", price: 1600 },
+    { category: "Skin", name: "HydraFacial", price: 3500 },
+    { category: "Skin", name: "Chemical Peel", price: 2800 },
+    { category: "Skin", name: "Microdermabrasion", price: 3000 },
+    { category: "Skin", name: "Oxygen Facial", price: 2200 },
+    { category: "Skin", name: "Glow Facial", price: 1900 },
+    { category: "Skin", name: "Laser Hair Removal", price: 2000 },
+    { category: "Skin", name: "Laser Skin Resurfacing", price: 5000 },
+    { category: "Skin", name: "Laser Toning", price: 4000 },
+    { category: "Skin", name: "Laser Pore Reduction", price: 3500 },
+    { category: "Skin", name: "Botox Treatment", price: 8000 },
+    { category: "Skin", name: "Dermal Fillers", price: 12000 },
+    { category: "Skin", name: "Under Eye Fillers", price: 7000 },
+    { category: "Skin", name: "Thread Lift", price: 15000 },
+    { category: "Skin", name: "Suture Lift", price: 18000 },
+    { category: "Skin", name: "Radio Frequency Treatment", price: 3000 },
+    { category: "Skin", name: "RF Skin Tightening", price: 4000 },
+    { category: "Skin", name: "RF Body Sculpting", price: 5000 },
+    { category: "Skin", name: "RF Face Lifting", price: 4500 },
+    { category: "Skin", name: "Body Scrub", price: 1500 },
+    { category: "Skin", name: "Body Wrap", price: 2000 },
+    { category: "Skin", name: "Detox Body Wrap", price: 2500 },
+    { category: "Skin", name: "Anti-Cellulite Wrap", price: 3000 },
+    { category: "Skin", name: "Swedish Massage", price: 1800 },
+    { category: "Skin", name: "Aromatherapy Massage", price: 2200 },
+    { category: "Skin", name: "Hot Stone Massage", price: 2800 },
+    { category: "Skin", name: "Thai Massage", price: 2500 },
+    { category: "Skin", name: "Deep Tissue Massage", price: 2400 },
+    { category: "Skin", name: "Full Body Bleaching", price: 1200 },
+    { category: "Skin", name: "Body Shaping", price: 3500 },
+    { category: "Skin", name: "Weight Loss Treatment", price: 4000 },
+    { category: "Skin", name: "Anti-Aging Body Treatment", price: 3200 },
+    { category: "Skin", name: "Face Waxing", price: 400 },
+    { category: "Skin", name: "Underarms Waxing", price: 300 },
+    { category: "Skin", name: "Leg Waxing (Full)", price: 800 },
+    { category: "Skin", name: "Armpit + Legs Waxing", price: 1000 },
+
+    // WELLNESS SERVICES
+    { category: "Wellness", name: "Swedish Massage Therapy", price: 1800 },
+    { category: "Wellness", name: "Aromatherapy Massage Therapy", price: 2200 },
+    { category: "Wellness", name: "Hot Stone Massage Therapy", price: 2800 },
+    { category: "Wellness", name: "Deep Tissue Massage Therapy", price: 2400 },
+    { category: "Wellness", name: "Stress Relief Package", price: 3500 },
+    { category: "Wellness", name: "Weekend Relaxation Package", price: 4200 },
+    { category: "Wellness", name: "Corporate Wellness Package", price: 5000 },
+    { category: "Wellness", name: "Hatha Yoga", price: 800 },
+    { category: "Wellness", name: "Power Yoga", price: 1000 },
+    { category: "Wellness", name: "Meditation Class", price: 600 },
+    { category: "Wellness", name: "Pranayama Session", price: 700 },
+    { category: "Wellness", name: "Foot Reflexology", price: 1200 },
+    { category: "Wellness", name: "Hand Reflexology", price: 1000 },
+    { category: "Wellness", name: "Full Body Reflexology", price: 2000 },
+    { category: "Wellness", name: "Basic Diet Plan", price: 1500 },
+    { category: "Wellness", name: "Weight Loss Diet Plan", price: 2500 },
+    { category: "Wellness", name: "Skin Diet Plan", price: 1800 },
+    { category: "Wellness", name: "Hair Health Diet Plan", price: 1600 },
+    { category: "Wellness", name: "Juice Detox", price: 2000 },
+    { category: "Wellness", name: "Herbal Detox", price: 2200 },
+    { category: "Wellness", name: "Lifestyle Detox", price: 3000 },
+    { category: "Wellness", name: "Beauty + Wellness Package", price: 4500 },
+    { category: "Wellness", name: "Stress Relief + Beauty Treatment", price: 3800 },
+    { category: "Wellness", name: "Complete Beauty Wellness Package", price: 6000 },
+    { category: "Wellness", name: "Summer Cool Down", price: 2800 },
+    { category: "Wellness", name: "Winter Glow", price: 3200 },
+    { category: "Wellness", name: "Monsoon Wellness", price: 2600 },
+    { category: "Wellness", name: "Spring Refresh", price: 2900 },
+    { category: "Wellness", name: "Joint Pain Relief", price: 1800 },
+    { category: "Wellness", name: "Back Pain Therapy", price: 2000 },
+    { category: "Wellness", name: "Muscle Pain Treatment", price: 1900 },
+    { category: "Wellness", name: "Sleep Therapy", price: 1600 },
+    { category: "Wellness", name: "Aromatherapy for Sleep", price: 1400 },
+    { category: "Wellness", name: "Stress-Free Sleep Package", price: 2500 }
+  ];
+};
+
 slots: generateSlots()
 
 
@@ -163,11 +273,12 @@ app.get("/", (req, res) => {
 app.get("/salons", async (req, res) => {
   const salons = await Salon.find();
   
-  // Update all salons with new slots
+  // Update all salons with new slots and services
   const updatedSalons = salons.map(salon => {
     return {
       ...salon.toObject(),
-      slots: generateSlots()
+      slots: generateSlots(),
+      services: generateServices()
     };
   });
   

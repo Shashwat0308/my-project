@@ -12,6 +12,7 @@ function App() {
   const [email, setEmail] = useState("");
   const [otp, setOtp] = useState("");
   const [currentPage, setCurrentPage] = useState("home"); // "home", "login"
+  const [selectedCategory, setSelectedCategory] = useState("Hair");
 
   // Fetch salons from backend
   useEffect(() => {
@@ -22,6 +23,11 @@ function App() {
       .then((res) => res.json())
       .then((data) => setSalons(data));
   }, []);
+
+  // Reset selected service when category changes
+  useEffect(() => {
+    setSelectedService("");
+  }, [selectedCategory]);
 
 // Login function
 const login = async () => {
@@ -192,10 +198,10 @@ return (
         <div className="preferences" style={{ textAlign: "center", margin: "20px" }}>
           <h3 className="preferences-title">Your Preferences</h3>
 
-          <select>
-            <option>Hair</option>
-            <option>Skin</option>
-            <option>Wellness</option>
+          <select value={selectedCategory} onChange={(e) => setSelectedCategory(e.target.value)}>
+            <option value="Hair">💇‍♀️ Hair Services</option>
+            <option value="Skin">💆‍♀️ Skin Services</option>
+            <option value="Wellness">🧘‍♀️ Wellness Services</option>
           </select>
         </div>
 
@@ -212,11 +218,13 @@ return (
                 onChange={(e) => setSelectedService(e.target.value)}
               >
                 <option value="">--Select Service--</option>
-                {salon.services.map((s, i) => (
-                  <option key={i} value={s.name}>
-                    {s.name} - ₹{s.price}
-                  </option>
-                ))}
+                {salon.services
+                  .filter(s => s.category === selectedCategory)
+                  .map((s, i) => (
+                    <option key={i} value={s.name}>
+                      {s.name} - ₹{s.price}
+                    </option>
+                  ))}
               </select>
 
               <h4>Select Time:</h4>
