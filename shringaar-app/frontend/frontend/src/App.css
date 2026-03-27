@@ -83,23 +83,21 @@
   position: relative;
 }
 
+/* Back button / Home button */
 .back-btn {
-  position: absolute;
-  left: 0;
-  top: 0;
-  padding: 10px 20px;
-  background: rgba(255, 255, 255, 0.9);
-  border: 1px solid #ffb6c1;
-  border-radius: 25px;
+  background-color: #40fff2;   /* pink */
+  color: white;                /* text visible */
+  padding: 10px 15px;
+  border: none;
+  border-radius: 8px;
   cursor: pointer;
   font-weight: bold;
-  transition: all 0.3s ease;
 }
 
 .back-btn:hover {
-  background: rgba(255, 255, 255, 1);
-  transform: translateY(-2px);
+  background-color: #e73370;
 }
+
 
 .login-header h2 {
   color: #ffffff;

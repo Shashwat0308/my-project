@@ -13,6 +13,8 @@ function App() {
   const [otp, setOtp] = useState("");
   const [currentPage, setCurrentPage] = useState("home"); // "home", "login"
   const [selectedCategory, setSelectedCategory] = useState("Hair");
+  const [selectedDay, setSelectedDay] = useState("Monday");
+  const [page, setPage] = useState("home");
 
   // Fetch salons from backend
   useEffect(() => {
@@ -65,6 +67,7 @@ const book = async (salonId) => {
         salonId: salonId,
         service: selectedService,
         date: "2026-03-25",
+        day: selectedDay,
         time: selectedTime,
       }),
     });
@@ -133,8 +136,7 @@ return (
       <div className="login-page">
         <div className="login-header">
           <button className="back-btn" onClick={() => setCurrentPage("home")}>
-            ← Back to Home
-          </button>
+           Back to Home</button>
           <h2>Login to Your Account</h2>
         </div>
 
@@ -202,6 +204,20 @@ return (
             <option value="Hair">💇‍♀️ Hair Services</option>
             <option value="Skin">💆‍♀️ Skin Services</option>
             <option value="Wellness">🧘‍♀️ Wellness Services</option>
+          </select>
+
+          <select
+            value={selectedDay}
+            onChange={(e) => setSelectedDay(e.target.value)}
+            style={{ marginLeft: "10px" }}
+          >
+            <option value="Monday">Monday</option>
+            <option value="Tuesday">Tuesday</option>
+            <option value="Wednesday">Wednesday</option>
+            <option value="Thursday">Thursday</option>
+            <option value="Friday">Friday</option>
+            <option value="Saturday">Saturday</option>
+            <option value="Sunday">Sunday</option>
           </select>
         </div>
 
