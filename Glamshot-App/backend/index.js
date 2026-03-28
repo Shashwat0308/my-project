@@ -1,10 +1,12 @@
 const express = require("express");
 const mongoose = require("mongoose");
 const cors = require("cors");
+const adminRoutes = require("./routes/admin");
 
 const User = require("./models/User");
 const Salon = require("./models/Salon");
 const Booking = require("./models/Booking");
+
 
 // OTP store (temporary memory)
 const otpStore = {};
@@ -12,6 +14,7 @@ const otpStore = {};
 const app = express();
 app.use(cors());
 app.use(express.json());
+app.use("/api/admin", adminRoutes);
 
 /* =========================
    SLOT GENERATOR (9 AM - 6 PM)
@@ -178,4 +181,7 @@ app.get("/", (req, res) => {
 
 app.listen(5000, () => {
   console.log("Server running on port 5000");
+  
+  
+console.log("Admin routes loaded");
 });
