@@ -169,12 +169,8 @@ function createRateLimiter({
           route,
         });
 
-        res.setHeader("X-RateLimit-Limit", result.limit);
-        res.setHeader("X-RateLimit-Remaining", result.remaining);
-        res.setHeader(
-          "X-RateLimit-Reset",
-          Math.floor((Date.now() + result.resetMs) / 1000)
-        );
+        res.setHeader('X-RateLimit-Limit', result.limit);
+res.setHeader('X-RateLimit-Remaining', result.remaining);
 
         if (!result.allowed) {
           res.setHeader(
