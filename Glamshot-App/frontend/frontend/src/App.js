@@ -122,7 +122,7 @@ return (
     {currentPage === "home" && !user && (
       <div className="home-page">
         <div className="welcome-section">
-          <h1 className="welcome-title">Welcome to Shringaar Beauty Salon</h1>
+          <h1 className="welcome-title">Welcome to Glamshot</h1>
           <p className="welcome-subtitle">Book your beauty appointments with ease</p>
           <button className="login-btn" onClick={() => setCurrentPage("login")}>
             Login
