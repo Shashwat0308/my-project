@@ -1,9 +1,11 @@
+
 const express = require("express");
 const mongoose = require("mongoose");
 const cors = require("cors");
 const adminRoutes = require("./routes/admin");
 
-const User = require("./models/User");
+
+const User = require("./models/User"); // <-- Add this
 const Salon = require("./models/Salon");
 const Booking = require("./models/Booking");
 
@@ -84,6 +86,7 @@ app.post("/register", async (req, res) => {
 });
 
 // Login
+// Login
 app.post("/login", async (req, res) => {
   const { phone, email } = req.body;
 
@@ -114,7 +117,8 @@ app.post("/send-otp", (req, res) => {
   res.send({ message: "OTP sent ✅" });
 });
 
-// Verify OTP
+
+// Verify OTP & Register
 app.post("/verify-otp", async (req, res) => {
   const { name, phone, email, otp } = req.body;
 

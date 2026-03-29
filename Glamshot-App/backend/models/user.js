@@ -1,19 +1,11 @@
+// models/User.js
 const mongoose = require("mongoose");
 
 const userSchema = new mongoose.Schema({
-  name: String,
-  phone: String,
-  email: String
-});
-const userSchema = new mongoose.Schema({
-  name: String,
-  email: String,
-  password: String,
-  role: {
-    type: String,
-    enum: ["user", "admin"],
-    default: "user"
-  }
+  name: { type: String, required: true },
+  phone: { type: String, required: true, unique: true },
+  email: { type: String, required: true, unique: true },
+  role: { type: String, default: "user" } // for admin check later
 });
 
 module.exports = mongoose.model("User", userSchema);
