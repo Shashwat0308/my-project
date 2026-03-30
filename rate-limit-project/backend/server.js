@@ -161,7 +161,15 @@ app.get("/analytics", async (req, res) => {
     const total = await redis.get(`user:${userId}:total`) || 0;
     const blocked = await redis.get(`user:${userId}:blocked`) || 0;
 
-    users.push({ userId, total, blocked });
+    // ✅ ADD THIS
+    const timestamps = await redis.lrange(`user:${userId}:timestamps`, 0, -1);
+
+    users.push({
+      userId,
+      total,
+      blocked,
+      timestamps   // ✅ IMPORTANT
+    });
   }
 
   res.json(users);
