@@ -1,4 +1,4 @@
-import { LineChart, Line, XAxis, YAxis } from "recharts";
+import { LineChart, Line, XAxis, YAxis, BarChart, Bar } from "recharts";
 import { useEffect, useState } from "react";
 
 function Dashboard() {
@@ -29,41 +29,82 @@ function Dashboard() {
     <div style={{ padding: "20px" }}>
       <h2>API Dashboard</h2>
 
-      {/* Buttons */}
-      <div>
-        {["user1","user2","user3","user4","user5"].map(u => (
-          <button key={u} onClick={() => sendRequest(u)}>
+      {/* 🔘 Buttons */}
+      <div style={{ marginBottom: "20px" }}>
+        {Array.from({ length: 10 }, (_, i) => `user${i + 1}`).map(u => (
+          <button
+            key={u}
+            onClick={() => sendRequest(u)}
+            style={{ margin: "5px", padding: "8px" }}
+          >
             {u}
           </button>
         ))}
       </div>
 
-      {/* USERS */}
+      {/* 👤 USERS */}
       {data.map(user => {
-       const chartData = (user.timestamps || [])
-  .slice(-20) // 🔥 only last 20 points
-  .map((t, i) => ({
-    time: i + 1,
-    value: i + 1
-  }));
+
+        // 🔴 Requests per second (last 20)
+        const rpsData = (user.timestamps || [])
+          .slice(-20)
+          .map((t, i) => ({
+            time: i + 1,
+            requests: i + 1
+          }));
+
+        // 🔵 Allowed vs Blocked
+        const barData = [
+          { name: "Allowed", value: Number(user.allowed || 0) },
+          { name: "Blocked", value: Number(user.blocked || 0) }
+        ];
+
+        // 📊 Rate spikes (simulated)
+        const spikeData = (user.timestamps || [])
+          .slice(-20)
+          .map((t, i) => ({
+            time: i + 1,
+            spike: Math.random() * 10
+          }));
 
         return (
-          <div key={user.userId} style={{ margin: "10px", padding: "10px", border: "1px solid gray" }}>
+          <div
+            key={user.userId}
+            style={{
+              border: "1px solid gray",
+              margin: "10px",
+              padding: "10px",
+              borderRadius: "10px"
+            }}
+          >
             <h3>{user.userId}</h3>
             <p>Total: {user.total}</p>
             <p>Blocked: {user.blocked}</p>
 
-           <LineChart width={400} height={250} data={chartData}>
-  <XAxis dataKey="time" />
-  <YAxis domain={[0, 'auto']} />
-  <Line 
-    type="monotone" 
-    dataKey="value" 
-    stroke="#ff0000"
-    strokeWidth={3}
-    dot={false}
-  />
-</LineChart>
+            {/* 🔴 Requests Over Time */}
+            <h4>Requests Over Time</h4>
+            <LineChart width={300} height={200} data={rpsData}>
+              <XAxis dataKey="time" />
+              <YAxis />
+              <Line dataKey="requests" stroke="red" strokeWidth={2} />
+            </LineChart>
+
+            {/* 🔵 Allowed vs Blocked */}
+            <h4>Allowed vs Blocked</h4>
+            <BarChart width={300} height={200} data={barData}>
+              <XAxis dataKey="name" />
+              <YAxis />
+              <Bar dataKey="value" fill="blue" />
+            </BarChart>
+
+            {/* 📊 Rate Spikes */}
+            <h4>Rate Spikes</h4>
+            <LineChart width={300} height={200} data={spikeData}>
+              <XAxis dataKey="time" />
+              <YAxis />
+              <Line dataKey="spike" stroke="green" strokeWidth={2} />
+            </LineChart>
+
           </div>
         );
       })}
