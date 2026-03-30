@@ -9,6 +9,7 @@
     "react-chartjs-2": "^5.2.0",
     "react-dom": "^18.2.0",
     "react-scripts": "^0.0.0",
+    "recharts": "^3.8.1",
     "web-vitals": "^5.2.0"
   },
   "scripts": {

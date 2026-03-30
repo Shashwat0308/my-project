@@ -3,6 +3,9 @@
 const express = require("express");
 const cors = require("cors");
 const jwt = require("jsonwebtoken");
+const Redis = require("ioredis");
+const redis = new Redis(process.env.REDIS_URL || "redis://127.0.0.1:6379");
+
 
 // ✅ Import your modules correctly
 const rateLimitFactory = require("./middleware/rateLimiter");
@@ -129,10 +132,48 @@ app.post("/api/admin/limits", (req, res) => {
   return res.json({ ok: true });
 });
 
+
+
+app.get("/analytics/:userId", async (req, res) => {
+  const userId = req.params.userId;
+
+  const total = await redis.get(`user:${userId}:total`) || 0;
+  const allowed = await redis.get(`user:${userId}:allowed`) || 0;
+  const blocked = await redis.get(`user:${userId}:blocked`) || 0;
+
+  const timestamps = await redis.lrange(`user:${userId}:timestamps`, 0, -1);
+
+  res.json({
+    userId,
+    total,
+    allowed,
+    blocked,
+    timestamps
+  });
+});
+
+app.get("/analytics", async (req, res) => {
+  const users = [];
+
+  for (let i = 1; i <= 10; i++) {
+    const userId = `user${i}`;
+
+    const total = await redis.get(`user:${userId}:total`) || 0;
+    const blocked = await redis.get(`user:${userId}:blocked`) || 0;
+
+    users.push({ userId, total, blocked });
+  }
+
+  res.json(users);
+});
+
+
 // ================= SERVER =================
 
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
 });
+
+
 
 module.exports = app;

@@ -1,4 +1,4 @@
-const IORedis = require('ioredis');
+const IORedis = require("ioredis");
 
 function createRateLimiter({
   redisUrl,
@@ -11,8 +11,8 @@ function createRateLimiter({
 
   // ✅ Decide whether to use Redis or in-memory
   const useInMemory =
-    process.env.NODE_ENV === 'test' ||
-    process.env.NO_REDIS === '1' ||
+    process.env.NODE_ENV === "test" ||
+    process.env.NO_REDIS === "1" ||
     !redisUrl;
 
   if (useInMemory) {
@@ -43,21 +43,38 @@ function createRateLimiter({
           return [0, Math.floor(tokens), capacity, retry_after_ms];
         }
       },
+
+      // ✅ add basic redis-like methods for analytics
+      async incr(key) {
+        const val = store.get(key) || 0;
+        store.set(key, val + 1);
+      },
+
+      async lpush(key, value) {
+        const arr = store.get(key) || [];
+        arr.unshift(value);
+        store.set(key, arr);
+      },
+
+      async ltrim(key, start, end) {
+        const arr = store.get(key) || [];
+        store.set(key, arr.slice(start, end + 1));
+      },
     };
 
   } else {
-    // ✅ Use Redis Cloud URL properly
+    // ✅ Use Redis
     redis = new IORedis(redisUrl, {
       maxRetriesPerRequest: null,
       enableOfflineQueue: true,
     });
 
-    redis.on('connect', () => {
-      console.log('✅ Redis connected:', redisUrl);
+    redis.on("connect", () => {
+      console.log("✅ Redis connected:", redisUrl);
     });
 
-    redis.on('error', (err) => {
-      console.error('❌ Redis error:', err.message);
+    redis.on("error", (err) => {
+      console.error("❌ Redis error:", err.message);
     });
   }
 
@@ -84,7 +101,6 @@ function createRateLimiter({
     tokens = tokens - requested
     redis.call('HMSET', key, 'tokens', tostring(tokens), 'last', tostring(now))
     redis.call('PEXPIRE', key, 86400000)
-
     return {1, math.floor(tokens), capacity}
   else
     local needed = requested - tokens
@@ -100,9 +116,8 @@ function createRateLimiter({
   end
   `;
 
-  // ✅ Register Lua command
   if (redis.defineCommand) {
-    redis.defineCommand('consume_token', {
+    redis.defineCommand("consume_token", {
       numberOfKeys: 1,
       lua,
     });
@@ -169,35 +184,40 @@ function createRateLimiter({
           route,
         });
 
-        res.setHeader('X-RateLimit-Limit', result.limit);
-res.setHeader('X-RateLimit-Remaining', result.remaining);
+        // ✅ USER ID for analytics
+        const userId = req.headers["user-id"] || identity;
 
+        // ✅ TOTAL requests
+        await redis.incr(`user:${userId}:total`);
+
+        // ❌ BLOCKED
         if (!result.allowed) {
-          res.setHeader(
-            "Retry-After",
-            Math.ceil(result.retryAfterMs / 1000)
-          );
+          await redis.incr(`user:${userId}:blocked`);
 
-          if (saveEvent && Math.random() < sampleSaveRate) {
-            saveEvent({
-              route,
-              key: identity,
-              timestamp: new Date(),
-            }).catch(() => {});
-          }
+          res.setHeader("Retry-After", Math.ceil(result.retryAfterMs / 1000));
 
           return res.status(429).json({
             message: "Too Many Requests ❌",
           });
         }
 
-        // ✅ expose remaining tokens to frontend
+        // ✅ ALLOWED
+        await redis.incr(`user:${userId}:allowed`);
+
+        // ✅ TIMESTAMPS
+        await redis.lpush(`user:${userId}:timestamps`, Date.now());
+        await redis.ltrim(`user:${userId}:timestamps`, 0, 99);
+
+        // headers
+        res.setHeader("X-RateLimit-Limit", result.limit);
+        res.setHeader("X-RateLimit-Remaining", result.remaining);
+
         res.locals.remaining = result.remaining;
 
         next();
       } catch (err) {
         console.error("Rate limiter error:", err);
-        next(); // fail-open
+        next();
       }
     };
   }
