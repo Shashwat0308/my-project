@@ -9,7 +9,7 @@ function createRateLimiter({
 
   let redis;
 
-  // ✅ Decide whether to use Redis or in-memory
+  // ✅ Decide Redis or in-memory
   const useInMemory =
     process.env.NODE_ENV === "test" ||
     process.env.NO_REDIS === "1" ||
@@ -44,7 +44,6 @@ function createRateLimiter({
         }
       },
 
-      // ✅ add basic redis-like methods for analytics
       async incr(key) {
         const val = store.get(key) || 0;
         store.set(key, val + 1);
@@ -60,10 +59,19 @@ function createRateLimiter({
         const arr = store.get(key) || [];
         store.set(key, arr.slice(start, end + 1));
       },
+
+      async get(key) {
+        return store.get(key) || 0;
+      },
+
+      async lrange(key, start, end) {
+        const arr = store.get(key) || [];
+        return arr.slice(start, end + 1);
+      },
     };
 
   } else {
-    // ✅ Use Redis
+    // ✅ Redis setup
     redis = new IORedis(redisUrl, {
       maxRetriesPerRequest: null,
       enableOfflineQueue: true,
@@ -179,19 +187,16 @@ function createRateLimiter({
 
         const key = `${route}:${identity}`;
 
-        const result = await checkAndConsume({
-          key,
-          route,
-        });
+        const result = await checkAndConsume({ key, route });
 
-        // ✅ USER ID for analytics
+        // ✅ USER ID
         const userId = req.headers["user-id"] || identity;
 
-        // ✅ TOTAL requests
+        // ✅ TOTAL
         await redis.incr(`user:${userId}:total`);
 
-        // ❌ BLOCKED
         if (!result.allowed) {
+          // ❌ BLOCKED
           await redis.incr(`user:${userId}:blocked`);
 
           res.setHeader("Retry-After", Math.ceil(result.retryAfterMs / 1000));
@@ -208,7 +213,7 @@ function createRateLimiter({
         await redis.lpush(`user:${userId}:timestamps`, Date.now());
         await redis.ltrim(`user:${userId}:timestamps`, 0, 99);
 
-        // headers
+        // ✅ HEADERS
         res.setHeader("X-RateLimit-Limit", result.limit);
         res.setHeader("X-RateLimit-Remaining", result.remaining);
 

@@ -4,15 +4,15 @@ const express = require("express");
 const cors = require("cors");
 const jwt = require("jsonwebtoken");
 const Redis = require("ioredis");
+
+// ✅ Redis setup
 const redis = new Redis(process.env.REDIS_URL || "redis://127.0.0.1:6379");
-const allowed = await redis.get(`user:${userId}:allowed`) || 0;
 
-
-// ✅ Import your modules correctly
+// ✅ Import modules
 const rateLimitFactory = require("./middleware/rateLimiter");
-const { connectMongo, saveThrottleEvent } = require("./mongo"); // ⚠️ FIXED PATH
+const { connectMongo, saveThrottleEvent } = require("./mongo");
 
-const app = express();   // ✅ FIRST create app
+const app = express();
 
 // ✅ Middlewares
 app.use(cors({
@@ -47,12 +47,7 @@ function identify(req) {
   return { id: req.ip, type: "ip" };
 }
 
-// ✅ Connect Mongo
-connectMongo().catch((err) =>
-  console.error("Mongo connect failed:", err)
-);
-
-// ⚡ Rate limiter setup
+// ⚡ Rate limiter
 const rateLimiter = rateLimitFactory({
   redisUrl: process.env.REDIS_URL || "redis://127.0.0.1:6379",
   default: {
@@ -66,7 +61,7 @@ const rateLimiter = rateLimitFactory({
 
 // ================= ROUTES =================
 
-// ✅ Health check
+// ✅ Health
 app.get("/", (req, res) => {
   res.send("Server running 🚀");
 });
@@ -87,31 +82,31 @@ app.post("/api/login", (req, res) => {
   return res.status(401).json({ message: "Invalid credentials" });
 });
 
-// 🌐 Public route
+// 🌐 Public
 app.get(
   "/api/public",
   rateLimiter.middleware({ route: "public", identify }),
   (req, res) => {
-    res.status(200).json({
+    res.json({
       message: "Public route OK",
       remaining: res.locals.remaining || null,
     });
   }
 );
 
-// 🔒 Protected route
+// 🔒 Protected
 app.get(
   "/api/protected",
   rateLimiter.middleware({ route: "protected", identify }),
   (req, res) => {
-    res.status(200).json({
+    res.json({
       message: "Protected route OK",
       remaining: res.locals.remaining || null,
     });
   }
 );
 
-// ⚙️ Admin routes
+// ⚙️ Admin
 app.get("/api/admin/limits", (req, res) => {
   res.json(rateLimiter.getConfig());
 });
@@ -130,18 +125,19 @@ app.post("/api/admin/limits", (req, res) => {
     windowSec: Number(windowSec) || undefined,
   });
 
-  return res.json({ ok: true });
+  res.json({ ok: true });
 });
 
 
+// ================= ANALYTICS =================
 
+// 👤 Single user
 app.get("/analytics/:userId", async (req, res) => {
   const userId = req.params.userId;
 
   const total = await redis.get(`user:${userId}:total`) || 0;
   const allowed = await redis.get(`user:${userId}:allowed`) || 0;
   const blocked = await redis.get(`user:${userId}:blocked`) || 0;
-
   const timestamps = await redis.lrange(`user:${userId}:timestamps`, 0, -1);
 
   res.json({
@@ -153,6 +149,7 @@ app.get("/analytics/:userId", async (req, res) => {
   });
 });
 
+// 👥 All users
 app.get("/analytics", async (req, res) => {
   const users = [];
 
@@ -161,15 +158,13 @@ app.get("/analytics", async (req, res) => {
 
     const total = await redis.get(`user:${userId}:total`) || 0;
     const blocked = await redis.get(`user:${userId}:blocked`) || 0;
-
-    // ✅ ADD THIS
     const timestamps = await redis.lrange(`user:${userId}:timestamps`, 0, -1);
 
     users.push({
       userId,
       total,
       blocked,
-      timestamps   // ✅ IMPORTANT
+      timestamps
     });
   }
 
@@ -177,12 +172,21 @@ app.get("/analytics", async (req, res) => {
 });
 
 
-// ================= SERVER =================
+// ================= START SERVER =================
 
-app.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}`);
-});
+async function startServer() {
+  try {
+    await connectMongo();
 
+    app.listen(PORT, () => {
+      console.log(`Server running on port ${PORT}`);
+    });
 
+  } catch (err) {
+    console.error("Startup error:", err);
+  }
+}
+
+startServer();
 
 module.exports = app;
